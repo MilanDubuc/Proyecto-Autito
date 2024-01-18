@@ -1,4 +1,5 @@
 import os
+import copy
 
 mundo = [[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
          [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
@@ -41,8 +42,7 @@ def frenar_y():
                     
 
 def render():
-    global mundo
-    pantalla = mundo.copy()
+    pantalla = copy.deepcopy(mundo)
     pantalla[pos_y][pos_x] = "X"
     
     for i in range(len(pantalla)):
