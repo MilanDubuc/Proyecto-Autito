@@ -1,5 +1,12 @@
 import time
 import os
+import pygame
+
+#inicializacion:
+pygame.init()
+pygame.display.set_mode([100, 100])
+framerate = 10  #fps
+frameTime = 1/framerate
 
 class Auto:
     def __init__(self, peso, torque, velocidadMaxima, agarre):
@@ -14,27 +21,33 @@ class Auto:
     def get_pos(self):
         return self.__posicion
     
-    def acelerar(self, direccion, inicio):
+    def get_vel(self):
+        return self.__velocidad
+    
+    def acelerar(self, direccion):
         self.__velocidad = self.__velocidad + self.__aceleracion * direccion * frameTime
-        
-framerate = 60
-frameTime = 1/framerate
-frameReset = time.time()
-golcito = Auto(1500, 3000, 190, 99)
-while (time.time() - frameReset) < (frameTime):                      #fps cycle
-    print(golcito.get_pos())
-    print("    ^W\nA<-- -->D\n    vS\n")
-    while (True):       
-        entrada = getkey()
-        if entrada == "a":
-            golcito.acelerar([-1,0], inicio)
-        elif entrada == "d":
-            golcito.acelerar([1,0], inicio)
-        elif entrada == "w":
-            golcito.acelerar([0,1], inicio)
-        elif entrada == "s":
-            golcito.acelerar([0,-1], inicio)
-        elif entrada == "stop":
-            break
-        else:
-            entrada = None
+
+
+while True:
+    frameReset = time.time()
+    golcito = Auto(1500, 3000, 190, 99)
+    while (time.time() - frameReset) < (frameTime):                      #fps cycle
+        os.system("cls")
+        print(golcito.get_pos())
+        print(golcito.get_vel())
+        print("    ^W\nA<-- -->D\n    vS\n")
+        while (True):       
+            entrada = pygame.key.get_pressed()
+            if entrada[pygame.K_a]:
+                golcito.acelerar([-1,0])
+            elif entrada[pygame.K_d]:
+                golcito.acelerar([1,0])
+            elif entrada[pygame.K_w]:
+                golcito.acelerar([0,1])
+            elif entrada[pygame.K_s]:
+                golcito.acelerar([0,-1])
+            elif entrada[pygame.K_ESCAPE]:
+                break
+            else:
+                entrada = None
+        break
